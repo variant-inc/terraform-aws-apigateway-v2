@@ -9,6 +9,12 @@ variable "description" {
   default     = ""
 }
 
+variable "tags" {
+  type        = map(string)
+  description = "Tags for S3 bucket"
+  default     = {}
+}
+
 variable "protocol_type" {
   description = "Protocol for API Gateway. Current support only for HTTP, other option is WebSocket."
   type        = string

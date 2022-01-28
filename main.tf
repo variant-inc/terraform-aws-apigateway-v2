@@ -8,6 +8,7 @@ resource "aws_apigatewayv2_api" "api" {
   name          = var.name
   description   = var.description
   protocol_type = var.protocol_type
+  tags          = var.tags
 
   dynamic "cors_configuration" {
     for_each = var.cors_configuration != {} ? [true] : []
@@ -52,12 +53,14 @@ resource "aws_apigatewayv2_route" "route" {
 resource "aws_apigatewayv2_stage" "stage" {
   api_id = aws_apigatewayv2_api.api.id
   name = "$default"
+  tags = var.tags
   auto_deploy = true
 }
 
 resource "aws_iam_role" "apigw_role" {
   count = var.create_role ? 1 : 0
   name  = format("APIGateway-role-%s", var.name)
+  tags = var.tags
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [

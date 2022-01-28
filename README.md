@@ -5,6 +5,7 @@
   - [Variable definitions](#variable-definitions)
     - [name](#name)
     - [description](#description)
+    - [tags](#tags)
     - [protocol_type](#protocol_type)
     - [cors_configuration](#cors_configuration)
     - [create_role](#create_role)
@@ -25,6 +26,7 @@
 | -------- | ------- | --------- | ----------- | ------- |
 | name | string |  | "test-apigw" |  |
 | description | string | "" | "Description of test apigw" |  |
+| tags | map(string) | {} | {"environment": "prod"} | |
 | protocol_type | string | "HTTP" |  |  |
 | cors_configuration | any | {} | `see below` | <https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-cors.html> |
 | create_role | bool | true | false |  |
@@ -51,6 +53,17 @@ Description of API gateway.
 Default:
 ```json
 "description": ""
+```
+
+### tags
+Tags for created bucket.
+```json
+"tags": {<map of tag keys and values>}
+```
+
+Default:
+```json
+"tags": {}
 ```
 
 ### protocol_type
@@ -189,6 +202,9 @@ mainContent
 ```json
 {
   "name": "test-apigw",
+  "tags": {
+    "environment": "prod"
+  },
   "integrations": {
     "test-lambda": {
       "integration_uri": "arn:aws:lambda:us-east-1:319244236588:function:luka-lambda-test",
