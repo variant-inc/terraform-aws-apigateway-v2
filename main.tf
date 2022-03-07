@@ -74,7 +74,12 @@ resource "aws_iam_role" "apigw_role" {
     ]
   })
 
-  managed_policy_arns = ["arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"]
+  managed_policy_arns = concat(
+    [
+      "arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+    ],
+    var.managed_policies
+  )
 
   dynamic "inline_policy" {
     for_each = length(local.sfn_arns) != 0 ? [true] : []

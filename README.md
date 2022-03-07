@@ -10,6 +10,7 @@
     - [cors_configuration](#cors_configuration)
     - [create_role](#create_role)
     - [policy](#policy)
+    - [managed_policies](#managed_policies)
     - [role](#role)
     - [disable_execute_api_endpoint](#disable_execute_api_endpoint)
     - [route_selection_expression](#route_selection_expression)
@@ -31,6 +32,7 @@
 | cors_configuration | any | {} | `see below` | <https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-cors.html> |
 | create_role | bool | true | false |  |
 | policy | list(any) | [] | `see below` |  |
+| managed_policies | list(string) | [] | `see below` |  |
 | role | string | "" | "arn:aws:iam::319244236588:role/service-role/test-apigw-role" |  |
 | disable_execute_api_endpoint | bool | false | true |  |
 | route_selection_expression | string | "$request.method $request.path" |  |  |
@@ -121,6 +123,18 @@ Default:
 "policy": []
 ```
 
+### managed_policies
+Additional managed policies which should be attached to auto-created role.
+Effective only if `create_role` is set to `true`.
+```json
+"managed_policies": [<list of managed policies>]
+```
+
+Default:
+```json
+"managed_policies": []
+```
+
 ### role
 ARN of externally created role. Use in case of `create_role` is set to `false`.
 ```json
@@ -205,6 +219,9 @@ mainContent
   "tags": {
     "environment": "prod"
   },
+  "managed_policies": [
+    "arn:aws:iam::319244236588:policy/example-managed-policy"
+  ],
   "integrations": {
     "test-lambda": {
       "integration_uri": "arn:aws:lambda:us-east-1:319244236588:function:luka-lambda-test",
